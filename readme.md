@@ -2,7 +2,7 @@
 
 This project provide a docker environment with useful libraries and tools helps to build, debug and test applications for prpl containers. The Docker images inclues :
 
- - Ambiorix tools, libs and samples : https://gitlab.com/prpl-foundation/components/ambiorix/ambiorix
+ - Ambiorix tools, libs and samples and python binding: https://gitlab.com/prpl-foundation/components/ambiorix/ambiorix
  - uci, ubus and procd tools and libs comming from OpenWrt : https://clockworkbird9.wordpress.com/2020/02/16/install-libubox-and-ubus-on-ubuntu/
 
 
