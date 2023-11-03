@@ -145,7 +145,7 @@ RUN cd  ambiorix \
     && cd /sdkworkdir/workspace \
     && rm -r ambiorix
     
-#USP AGENT
+#USP LIB
 RUN git clone https://gitlab.com/soft.at.home/usp/libraries/libprotobuf.git \
     && cd libprotobuf \
     && make \
@@ -167,6 +167,40 @@ RUN git clone https://gitlab.com/soft.at.home/usp/libraries/libprotobuf.git \
     && make install \
     && cd .. \
     && rm -r libusp libuspi libimtp libprotobuf
+
+
+#USP AGENT
+ENV TERM=linux
+RUN git clone https://gitlab.com/soft.at.home/usp/applications/uspagent.git \
+    && cd uspagent \
+    && make \
+    && make install \
+    && cd .. \
+    && git clone https://gitlab.com/soft.at.home/usp/applications/usp-endpoint.git \
+    && cd usp-endpoint \
+    && make \
+    && make install \
+    && cd .. \
+    && git clone https://gitlab.com/soft.at.home/usp/applications/tr181-localagent.git \
+    && cd tr181-localagent \
+    && make \
+    && make install \
+    && cd .. \
+    && git clone https://gitlab.com/soft.at.home/usp/applications/tr181-uspservices.git \
+    && cd tr181-uspservices \
+    && make \
+    && make install \
+    && cd .. \
+    && rm -r usp-endpoint uspagent tr181-localagent tr181-uspservices
+
+
+#Modules 
+RUN git clone https://gitlab.com/prpl-foundation/components/core/modules/mod-dmext.git \
+    && cd mod-dmext \
+    && make \
+    && make install \
+    && cd .. \
+    && rm -r mod-dmext 
 
 COPY entrypoint.sh /entrypoint.sh
 ENTRYPOINT ["/entrypoint.sh"]
