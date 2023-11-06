@@ -27,6 +27,7 @@ To manage SDK image and containers you can use the script *prpl-appsdk.sh*, opti
 - **build** : build the parent image used for development container
 - **list** : list all development container
 - **start < development directory >** : start a development container (build the parent image if they not exist) linked to  development directory given in parameters
+    - with '-u' option you login to development container as current user. By default you login as root
 - **stop** / **delete**  : stop or delete a development container linked to  development directory
     - the developpement directory is not deleted, in case of delete option, only the development container is deleted. 
 
