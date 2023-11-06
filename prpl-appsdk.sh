@@ -18,7 +18,7 @@ function print_usage() {
   echo "--------------------------"
   echo "  for user:group = $DUSER:$DGROUPS ($DUID:$DGUID)"
   echo "  docker image base is : $image:$version"
-  echo "  Usage : $0 [start <DIRECTORY> (-u : to start as user $DUSER) |stop <DIRECTORY> | delete <DIRECTORY> | build | list ]"
+  echo "  Usage : $0 [start <DIRECTORY> |stop <DIRECTORY> | delete <DIRECTORY> | build | list ]"
   exit 1
 }
 
@@ -87,15 +87,15 @@ function start() {
   is_run $1
   if test  $? -eq 1
   then
-		docker run -it --name $1  -e MY_USERNAME=$DUSER -e MY_GROUP=$DGROUPS -e MY_UID=$DUID -e MY_GID=$DGUID --mount source=$(pwd)/$2,target=/sdkworkdir/workspace,type=bind $image:$version $2
+		docker run -it --name $1   -e MY_USERNAME=$DUSER -e MY_GROUP=$DGROUPS -e MY_UID=$DUID -e MY_GID=$DGUID --mount source=$(pwd)/$2,target=/sdkworkdir/workspace,type=bind $image:$version 
+    #docker exec -it $1 $3
   else
 		is_exited $1
     if test  $? -eq 2
     then
       docker start $1
     fi
-		#docker exec -it $1 su $DUSER
-    docker exec -it $1 $2
+    docker exec -it $1 /bin/bash
   fi
 }
 
@@ -126,16 +126,7 @@ case $1 in
     check_twoparams "$@"
     get_directory "$2"
     echo "-> Start SDK for $name"
-    CMD="/bin/bash"
-    if [ -n "$3" ]
-    then
-      if [ $3 = '-u' ]
-      then
-        CMD="su $DUSER"
-      fi
-    fi
-    echo "commande is $CMD"
-    start "${image}_${name}" $2 $CMD
+    start "${image}_${name}" $2 
     exit_status "start SDK"
   ;;
   stop)
